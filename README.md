@@ -7,6 +7,8 @@
 
 > Building a cloud-native Security Operations Center (SOC) environment using Microsoft Sentinel to simulate real-world threat detection and incident response workflows.
 
+Status: Completed . The lab environment has been torn down; this repository documents the build, the configuration and the results.
+
 ---
 
 ## 📋 Project Overview
