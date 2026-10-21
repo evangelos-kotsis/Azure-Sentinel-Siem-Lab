@@ -7,7 +7,7 @@
 
 > Building a cloud-native Security Operations Center (SOC) environment using Microsoft Sentinel to simulate real-world threat detection and incident response workflows.
 
-Status: Completed . The lab environment has been torn down; this repository documents the build, the configuration and the results.
+> **Status:** Completed (March 2026). The Azure environment has been torn down. This repository documents the build, detection rules, playbook and results.
 
 ---
 
@@ -602,18 +602,15 @@ SecurityEvent
 
 ---
 
-## 📌 What I Learned
+## 📌 Lessons Learned
 
-- How to deploy and configure Microsoft Sentinel from scratch in Azure
-- How Azure Monitor Agent (AMA) collects and forwards Windows Security Events
-- How to write KQL queries for real-time security event analysis
-- How Analytics Rules automate threat detection and incident creation
-- How to build SOAR playbooks with Azure Logic Apps for automated response
-- How to integrate Sentinel with Outlook to deliver email alerts with dynamic incident data
-- How to simulate real attack scenarios (brute force, persistence, privilege escalation) and verify detection
-- How to build live SOC dashboards using Sentinel Workbooks
-- The complete SOC workflow: log ingestion → KQL detection → incident → SOAR → email alert
+- **End-to-end SOC workflow:** log ingestion → KQL detection → incident → SOAR → email alert, validated with simulated attacks (brute force, persistence, privilege escalation).
+- **Playbooks need explicit permissions.** The Logic App only ran after I granted Sentinel permissions on the resource group and created an automation rule. Building the playbook alone was not enough.
+- **Connector policies matter.** The Gmail connector was blocked (GmailConnectorPolicyViolation) when combined with Sentinel, so I switched to Outlook.
+- **A rule that is logically correct can still miss in simulation.** "Successful Login After Multiple Failures" did not fire because my `net use` simulation did not produce paired 4625/4624 events under NTLM. A realistic RDP-based test would be a better validation.
+- **Detection needs tuning.** A threshold of 5 failures per 5 minutes catches basic brute force, but production would need allow-lists and baselines to reduce noise.
+- **What I would do differently:** keep the analytics rules, the playbook and the workbook in code (Terraform or Bicep) behind a CI/CD pipeline, instead of building them in the portal.
 
 ---
 
-*Part of my cybersecurity portfolio — [evank95.github.io/My-CV-Page](https://evank95.github.io/My-CV-Page/)*
+*Part of my cybersecurity portfolio — [evank95.github.io/My-CV-Page](https://evangelos-kotsis.github.io/My-CV-Page/)*
